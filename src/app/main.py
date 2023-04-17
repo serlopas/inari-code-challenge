@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.core.database.postgres.database import engine
+from app.core.models.postgres import models
 from app.settings.base import get_settings
 from app.third_parties import metrics
 from app.third_parties.sentry import init_sentry_service
@@ -30,3 +32,4 @@ async def healthcheck():
 @app.on_event("startup")
 async def startup():
     await metrics.expose_metric_service(app, prometheus_instrumentator)
+    models.BaseModel.metadata.create_all(bind=engine)

@@ -16,6 +16,12 @@ class Settings(BaseSettings):
     SENTRY_ENVIRONMENT: Optional[str] = None
     SENTRY_TRACES_SAMPLE_RATE: Optional[float] = 1.0
 
+    DB_POSTGRES_DBNAME: str
+    DB_POSTGRES_USER: str
+    DB_POSTGRES_PASSWORD: str
+    DB_POSTGRES_HOST: str
+    DB_POSTGRES_PORT: int
+
     API_KEY: str
 
     class Config:
