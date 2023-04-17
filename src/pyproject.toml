@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "inari-code-challenge"
+version = "0.0.0"
+description = ""
+authors = ["Sergio López Arias <serlopas@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11.3"
+fastapi = "*"
+Hypercorn = "*"
+prometheus-fastapi-instrumentator = "*"
+sentry-sdk = {version="*", extras=['fastapi']}
+loguru = "*"
+stackprinter = "*"
+
+[tool.poetry.dev-dependencies]
+flake8 = "*"
+Flake8-pyproject = "*"
+pytest = "*"
+pytest-env = "*"
+pylint = "*"
+bandit = "*"
+httpx = "*"
+black = "*"
+mypy = "*"
+
+[tool.poetry.group.github-actions.dependencies]
+bandit = "*"
+flake8 = "*"
+Flake8-pyproject = "*"
+black = "*"
+mypy = "*"
+
+[tool.poetry_bumpversion.file."app/settings/base.py"]
+search = 'VERSION: str = "{current_version}"'
+replace = 'VERSION: str = "{new_version}"'
+
+[tool.poetry_bumpversion.file."../sonar-scanner.properties"]
+search = 'sonar.projectVersion={current_version}'
+replace = 'sonar.projectVersion={current_version}'
+
+[tool.flake8]
+per-file-ignores = [
+    "*/__init__.py:F401",
+    "*/test_*.py:E501",
+    ]
+max-line-length = 120
+ignore = [
+  # Ignore all pycodestyle code style violations
+  "E1",
+  "E2",
+  # do not use bare except, specify exception instead
+  "E722",
+  # local variable name is assigned to but never used
+  "F841",
+  # Ignore some pycodestyle code style violations
+  "W1",
+  "W5",
+  # continuation line over-indented for visual indent
+  "E127",
+  "F821"]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.pytest.ini_options]
+env = [
+    "ENVIRONMENT = local",
+    "PYTHONPATH = /app"]
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

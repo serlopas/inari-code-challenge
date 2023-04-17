@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  inari-code-challenge.api:
+    build:
+      context: ./
+      args:
+        ENV: local
+    container_name: inari-code-challenge.api
+    ports:
+      - "8030:80"
+    env_file:
+      - .env
+    volumes:
+      - "./src:/app"

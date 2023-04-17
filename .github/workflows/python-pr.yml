@@ -1,0 +1,52 @@
+name: Integrity checks
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.11.3
+        uses: actions/setup-python@v4
+        with:
+          python-version: |
+            3.11.3
+      - name: Install System Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry config virtualenvs.create false
+          poetry self add poetry-bumpversion
+      - name: Check requirements sync with Pipfile
+        run: |
+          poetry check
+        working-directory: ./src
+      - name: Install github-actions dependencies
+        run: |
+          poetry install --only github-actions
+        working-directory: ./src
+      - name: Run Mypy
+        continue-on-error: true
+        run: |
+          mypy app --ignore-missing-imports
+        working-directory: ./src
+      - name: Black
+        run: |
+          black app --check --verbose
+        working-directory: ./src
+      - name: Flake8 linter
+        run: |
+          flake8
+        working-directory: ./src
+      - name: Bandit security check
+        run: |
+          bandit -r app/ -n 3 -ll
+        working-directory: ./src
+      - name: Bump patch version
+        run: |
+          poetry version patch
+        working-directory: ./src
