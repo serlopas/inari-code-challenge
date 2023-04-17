@@ -1,5 +1,5 @@
 #!make
-.DEFAULT_GOAL=start
+.DEFAULT_GOAL=up
 
 build:
 	docker-compose build

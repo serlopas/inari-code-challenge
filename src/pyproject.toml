@@ -12,6 +12,7 @@ prometheus-fastapi-instrumentator = "*"
 sentry-sdk = {version="*", extras=['fastapi']}
 loguru = "*"
 stackprinter = "*"
+sqlalchemy = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"

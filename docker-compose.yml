@@ -1,6 +1,17 @@
 version: "3.7"
 
 services:
+  # PostgreSQL
+  db:
+    image: postgres:latest
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgresuser
+      - POSTGRES_PASSWORD=postgrespassword
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'
+
   inari-code-challenge.api:
     build:
       context: ./
@@ -9,6 +20,8 @@ services:
     container_name: inari-code-challenge.api
     ports:
       - "8030:80"
+    depends_on:
+      - db
     env_file:
       - .env
     volumes:
