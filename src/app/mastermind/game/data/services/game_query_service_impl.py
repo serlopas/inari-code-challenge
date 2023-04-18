@@ -12,7 +12,7 @@ class GameQueryServiceImpl(GameQueryService):
     def __init__(self, session: Session):
         self.session: Session = session
 
-    def find_by_id(self, id: int) -> Optional[GameReadModel]:
+    def find_by_id(self, id: str) -> Optional[GameReadModel]:
         result: Optional[Game] = self.session.get(Game, id)
 
         if result is None:
