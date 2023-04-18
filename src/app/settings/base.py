@@ -24,6 +24,9 @@ class Settings(BaseSettings):
 
     API_KEY: str
 
+    MAX_TRIES: int = 10
+    CODE_SIZE: int = 4
+
     class Config:
         case_sensitive = True
 

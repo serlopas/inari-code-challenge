@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 
 from app.core.database.postgres.database import engine
-from app.core.models.postgres import models
+from app.core.models.postgres.models import Base
+from app.logging.middleware import LoggingMiddleware
+from app.mastermind.game.presentation.routes.create_game_route import router
 from app.settings.base import get_settings
 from app.third_parties import metrics
 from app.third_parties.sentry import init_sentry_service
-from app.logging.middleware import LoggingMiddleware
 
 if get_settings().USE_SENTRY:
     init_sentry_service()
@@ -17,6 +18,8 @@ app = FastAPI(
 )
 
 app.middleware("http")(LoggingMiddleware())
+
+app.include_router(router, prefix="/games", tags=["games"])
 
 prometheus_instrumentator = metrics.create_prometheus_instrumentator(app)
 
@@ -32,4 +35,4 @@ async def healthcheck():
 @app.on_event("startup")
 async def startup():
     await metrics.expose_metric_service(app, prometheus_instrumentator)
-    models.BaseModel.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)

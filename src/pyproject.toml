@@ -12,7 +12,8 @@ prometheus-fastapi-instrumentator = "*"
 sentry-sdk = {version="*", extras=['fastapi']}
 loguru = "*"
 stackprinter = "*"
-sqlalchemy = "*"
+SQLAlchemy = "*"
+psycopg2-binary = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
@@ -24,6 +25,7 @@ bandit = "*"
 httpx = "*"
 black = "*"
 mypy = "*"
+factory-boy = "*"
 
 [tool.poetry.group.github-actions.dependencies]
 bandit = "*"
