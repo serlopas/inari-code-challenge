@@ -3,7 +3,8 @@ from fastapi import FastAPI
 from app.core.database.postgres.database import engine
 from app.core.models.postgres.models import Base
 from app.logging.middleware import LoggingMiddleware
-from app.mastermind.game.presentation.routes.create_game_route import router
+from app.mastermind.game.presentation.routes import create_game_route
+from app.mastermind.game.presentation.routes import retrieve_game_route
 from app.settings.base import get_settings
 from app.third_parties import metrics
 from app.third_parties.sentry import init_sentry_service
@@ -19,7 +20,8 @@ app = FastAPI(
 
 app.middleware("http")(LoggingMiddleware())
 
-app.include_router(router, prefix="/games", tags=["games"])
+app.include_router(create_game_route.router, prefix="/games", tags=["games"])
+app.include_router(retrieve_game_route.router, prefix="/games", tags=["retrive_games"])
 
 prometheus_instrumentator = metrics.create_prometheus_instrumentator(app)
 

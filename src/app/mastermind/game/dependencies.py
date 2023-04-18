@@ -9,6 +9,7 @@ from app.mastermind.game.domain.repositories.game_repository import GameReposito
 from app.mastermind.game.domain.services.game_query_service import GameQueryService
 from app.mastermind.game.domain.unit_of_work.game_unit_of_work import GameUnitOfWork
 from app.mastermind.game.domain.use_cases.create_game_use_case import CreateGameUseCase, CreateGameUseCaseImpl
+from app.mastermind.game.domain.use_cases.retrieve_game_use_case import RetrieveGameUseCase, RetrieveGameUseCaseImpl
 
 
 def get_game_query_service(session: Session = Depends(get_session)) -> GameQueryService:
@@ -27,3 +28,7 @@ def get_game_unit_of_work(
 
 def get_create_game_use_case(unit_of_work: GameUnitOfWork = Depends(get_game_unit_of_work)) -> CreateGameUseCase:
     return CreateGameUseCaseImpl(unit_of_work)
+
+
+def get_retrieve_game_use_case(service: GameQueryService = Depends(get_game_query_service)) -> RetrieveGameUseCase:
+    return RetrieveGameUseCaseImpl(service)
