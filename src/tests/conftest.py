@@ -16,6 +16,14 @@ from app.core.enums.enums import ColorsEnum, GameStatusEnum
 from app.core.models.postgres.models import Base
 from app.mastermind.game.domain.entities.game_entity import GameEntity
 from app.mastermind.game.domain.entities.guess_entity import GuessEntity
+from app.mastermind.game.repository.sqlalchemy.impl.game_repository_impl import SqlAlchemyGameRepositoryImpl
+from app.mastermind.game.repository.sqlalchemy.impl.guess_repository_impl import SqlAlchemyGuessRepositoryImpl
+from app.mastermind.game.unit_of_work.impl.game_query_service_impl import GameQueryServiceImpl
+from app.mastermind.game.unit_of_work.impl.game_unit_of_work_impl import GameUnitOfWorkImpl
+from app.mastermind.game.unit_of_work.impl.guess_unit_of_work_impl import GuessUnitOfWorkImpl
+from app.mastermind.game.unit_of_work.use_cases.create_game_use_case import CreateGameUseCaseImpl
+from app.mastermind.game.unit_of_work.use_cases.create_guess_use_case import CreateGuessUseCaseImpl
+from app.mastermind.game.unit_of_work.use_cases.retrieve_game_use_case import RetrieveGameUseCaseImpl
 from app.settings.base import get_settings
 
 
@@ -141,3 +149,28 @@ def guess_entity(faker) -> GuessEntity:
 @pytest.fixture(scope="function")
 def guess_code():
     return "".join(random.choices(list(ColorsEnum), k=get_settings().CODE_SIZE))
+
+
+@pytest.fixture(scope="function")
+def create_guess_use_case(session):
+    game_repository = SqlAlchemyGameRepositoryImpl(session)
+    game_unit_of_work = GameUnitOfWorkImpl(game_repository)
+    guess_repository = SqlAlchemyGuessRepositoryImpl(session)
+    guess_unit_of_work = GuessUnitOfWorkImpl(guess_repository)
+
+    return CreateGuessUseCaseImpl(game_unit_of_work, guess_unit_of_work)
+
+
+@pytest.fixture(scope="function")
+def create_game_use_case(session):
+    game_repository = SqlAlchemyGameRepositoryImpl(session)
+    unit_of_work = GameUnitOfWorkImpl(game_repository)
+
+    return CreateGameUseCaseImpl(unit_of_work)
+
+
+@pytest.fixture(scope="function")
+def retrieve_game_use_case(session):
+    service = GameQueryServiceImpl(session)
+
+    return RetrieveGameUseCaseImpl(service)

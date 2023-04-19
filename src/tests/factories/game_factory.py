@@ -4,7 +4,7 @@ from datetime import datetime
 import factory
 
 from app.core.enums.enums import ColorsEnum, GameStatusEnum
-from app.mastermind.game.data.models.models import Game
+from app.mastermind.game.repository.sqlalchemy.models.models import Game
 from app.settings.base import get_settings
 from tests.factories.base_factory import BaseFactory
 
