@@ -12,7 +12,7 @@ class GuessQueryServiceImpl(GuessQueryService):
     def __init__(self, session: Session):
         self.session: Session = session
 
-    def find_by_id(self, id: int) -> Optional[GuessReadModel]:
+    def find_by_id(self, id: str) -> Optional[GuessReadModel]:
         result: Optional[Guess] = self.session.get(Guess, id)
 
         if result is None:

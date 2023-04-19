@@ -30,7 +30,7 @@ class GameRepositoryImpl(GameRepository):
 
         return [game.to_entity() for game in result]
 
-    def find_by_id(self, id: int) -> GameEntity | None:
+    def find_by_id(self, id: str) -> GameEntity | None:
         result: Optional[Game] = self.session.get(Game, id)
 
         if result is None:
@@ -51,7 +51,7 @@ class GameRepositoryImpl(GameRepository):
 
         return result.to_entity()
 
-    def delete_by_id(self, id: int):
+    def delete_by_id(self, id: str):
         statement = delete(Game).filter_by(id=id)
 
         self.session.execute(statement)

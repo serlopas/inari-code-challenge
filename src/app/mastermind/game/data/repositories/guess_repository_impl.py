@@ -30,7 +30,7 @@ class GuessRepositoryImpl(GuessRepository):
 
         return [guess.to_entity() for guess in result]
 
-    def find_by_id(self, id: int) -> GuessEntity | None:
+    def find_by_id(self, id: str) -> GuessEntity | None:
         result: Optional[Guess] = self.session.get(Guess, id)
 
         if result is None:
@@ -51,7 +51,7 @@ class GuessRepositoryImpl(GuessRepository):
 
         return result.to_entity()
 
-    def delete_by_id(self, id: int):
+    def delete_by_id(self, id: str):
         statement = delete(Guess).filter_by(id=id)
 
         self.session.execute(statement)

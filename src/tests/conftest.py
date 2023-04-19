@@ -136,3 +136,8 @@ def guess_entity(faker) -> GuessEntity:
         game_id=faker.uuid4(),
         created_at=datetime.now(),
     )
+
+
+@pytest.fixture(scope="function")
+def guess_code():
+    return "".join(random.choices(list(ColorsEnum), k=get_settings().CODE_SIZE))
