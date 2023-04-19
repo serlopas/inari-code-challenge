@@ -1,7 +1,8 @@
+import dataclasses
 import uuid
 from abc import abstractmethod
 from datetime import datetime
-from typing import Tuple, Optional
+from typing import Optional
 
 from app.core.enums.enums import GameStatusEnum, ColorsEnum
 from app.core.error.game_exceptions import GameNotFoundError, GameAlreadyFinishedError
@@ -15,12 +16,18 @@ from app.mastermind.game.unit_of_work.base.game_unit_of_work import GameUnitOfWo
 from app.mastermind.game.unit_of_work.base.guess_unit_of_work import GuessUnitOfWork
 
 
-class CreateGuessUseCase(BaseUseCase[Tuple[str, str], GuessReadModel]):
+@dataclasses.dataclass
+class CreateGuessUseCaseArgs:
+    game_id: str
+    guess_code: str
+
+
+class CreateGuessUseCase(BaseUseCase[CreateGuessUseCaseArgs, GuessReadModel]):
     game_unit_of_work: GameUnitOfWork
     guess_unit_of_work: GuessUnitOfWork
 
     @abstractmethod
-    def __call__(self, _) -> GuessGameStatusReadModel:
+    def __call__(self, args: CreateGuessUseCaseArgs) -> GuessGameStatusReadModel:
         raise NotImplementedError()
 
 
@@ -33,15 +40,11 @@ class CreateGuessUseCaseImpl(CreateGuessUseCase):
         self.game_unit_of_work = game_unit_of_work
         self.guess_unit_of_work = guess_unit_of_work
 
-    def __call__(self, args: Tuple[str, str]) -> GuessGameStatusReadModel:
-        (
-            game_id,
-            guess_code,
-        ) = args
-        guess_code = guess_code.lower()
+    def __call__(self, args: CreateGuessUseCaseArgs) -> GuessGameStatusReadModel:
+        guess_code = args.guess_code.lower()
 
         try:
-            game: Optional[GameEntity] = self.game_unit_of_work.repository.find_by_id(game_id)
+            game: Optional[GameEntity] = self.game_unit_of_work.repository.find_by_id(args.game_id)
             if game is None:
                 raise GameNotFoundError()
         except Exception:
@@ -66,7 +69,7 @@ class CreateGuessUseCaseImpl(CreateGuessUseCase):
             guess_code=guess_code,
             white_pegs=guess_result.white_pegs,
             black_pegs=guess_result.black_pegs,
-            game_id=game_id,
+            game_id=args.game_id,
             created_at=datetime.now(),
         )
 
