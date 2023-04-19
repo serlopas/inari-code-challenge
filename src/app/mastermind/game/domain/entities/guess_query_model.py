@@ -38,7 +38,7 @@ class GuessGameStatusReadModel(BaseModel):
     black_pegs: int = Field(example=1)
     game_id: str = Field(example="f7d690b539b048c99eaffe47cfe497a1")
     created_at: datetime
-    game_status: GameStatusEnum = Field(example=GameStatusEnum.in_progress)
+    game_status: str = Field(example=GameStatusEnum.in_progress)
 
     class Config:
         orm_mode = True
