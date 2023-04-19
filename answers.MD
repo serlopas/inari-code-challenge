@@ -1,5 +1,5 @@
 ### What is your favourite package manager and why?
-Currently, I use to use poetry because I had many problems with pipenv in the past (it usually took long time to resolve dependencies). But some months ago, I tries again pipenv for a side project and it had a new version that goes really well.
+Currently, I use to use poetry because I had many problems with pipenv in the past (it usually took long time to resolve dependencies). But some months ago, I tried again pipenv for a side project and it had a new version that goes really well.
 
 So I don't have a favourite package manager, I like these two.
 
