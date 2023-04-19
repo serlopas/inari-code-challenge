@@ -1,11 +1,10 @@
-from fastapi import Depends, status, APIRouter, HTTPException
+from fastapi import Depends, status, HTTPException
 
 from app.core.error.game_exceptions import GameNotFoundError
 from app.mastermind.game.dependencies import get_retrieve_game_use_case
 from app.mastermind.game.domain.entities.game_query_model import GameReadModel
 from app.mastermind.game.domain.use_cases.retrieve_game_use_case import RetrieveGameUseCase
-
-router = APIRouter()
+from app.mastermind.game.presentation.routes.games_router import router
 
 
 @router.get(

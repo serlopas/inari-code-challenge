@@ -5,5 +5,5 @@ class GameNotFoundError(BaseError):
     message = "Game does not exist."
 
 
-class GameAlreadyExistsError(BaseError):
-    message = "Game already exists"
+class GameAlreadyFinishedError(BaseError):
+    message = "Game already finished"

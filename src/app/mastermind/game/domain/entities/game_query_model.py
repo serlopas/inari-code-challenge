@@ -11,7 +11,7 @@ from app.mastermind.game.domain.entities.guess_query_model import GuessReadModel
 
 class GameReadModel(BaseModel):
     id: str = Field(example="f7d690b539b048c99eaffe47cfe497a0")
-    code: str = Field(example="RGGB")
+    code: str = Field(example="rggb")
     status: GameStatusEnum = Field(example="won")
     tries: int = Field(example=0)
     max_tries: int = Field(example=10)
