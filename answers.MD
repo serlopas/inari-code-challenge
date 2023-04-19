@@ -23,13 +23,15 @@ For example, for this project, I configure a pre-commit file with the following 
 - [black](https://pypi.org/project/black/): code formatter
 - [flake8](https://flake8.pycqa.org/en/latest/): linter
 
-Also, in the GitHub action, I run [bandit](https://pypi.org/project/bandit/) for security checks.
+Also, in the GitHub action, I run [bandit](https://pypi.org/project/bandit/) for security checks. Dependabot is also configured ([safety](https://pyup.io/safety/) can be used as an alternative to dependabot)
 
 ### Is there anything you would like to comment about the project, this small exercise, etc?
 I tried to respect DDD pattern as much as I can, this is my first time implementing a project with this architecture, so maybe there are some mistakes :')
 
-The project could be improved using async calls, but I had prefer to take care about the architecture.
+The project could be improved using async calls, but I had prefer to take care about the architecture. Also, API is not secured by any mechanism to make easier to test, but there is an implementation of a method to secure endpoints by an APIKEY, you just need to inject the dependency of *api_key_validator* to the endpoint (you can see an example in test_dependencies.py file)
 
 I tried to have a good code coverage with the tests (around 96%), using factories ([factory-boy](https://factoryboy.readthedocs.io/en/stable/index.html)) to create automatically objects in the database, [faker](https://faker.readthedocs.io/en/master/index.html) to give some randomness to data and pytest fixtures to avoid to repeat code during tests.
 
-This project has been created using a cookiecutter that I have participate developing it in Aplazame.
+This project has been created using a cookiecutter that I had participated developing it in Aplazame.
+
+Project is production-ready, having integrated sentry with just configuring the credentials in settings file. Also, [prometheus](https://prometheus.io/) is configured exposing an endpoint in order to retrieve platform metrics.
