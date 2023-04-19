@@ -4,7 +4,6 @@ from datetime import datetime
 
 from pydantic import Field, BaseModel
 
-from app.core.enums.enums import GameStatusEnum
 from app.mastermind.game.domain.entities.game_entity import GameEntity
 from app.mastermind.game.domain.entities.guess_query_model import GuessReadModel
 
@@ -12,7 +11,7 @@ from app.mastermind.game.domain.entities.guess_query_model import GuessReadModel
 class GameReadModel(BaseModel):
     id: str = Field(example="f7d690b539b048c99eaffe47cfe497a0")
     code: str = Field(example="rggb")
-    status: GameStatusEnum = Field(example="won")
+    status: str = Field(example="won")
     tries: int = Field(example=0)
     max_tries: int = Field(example=10)
     guesses: list[GuessReadModel]

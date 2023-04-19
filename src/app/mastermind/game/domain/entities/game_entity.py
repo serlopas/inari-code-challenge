@@ -22,7 +22,7 @@ class GameEntity:
         self.status = status
         self.tries = tries
         self.max_tries = max_tries
-        self.created_at = created_at
+        self.created_at = created_at if created_at else datetime.now()
         self.guesses = guesses
 
     def __eq__(self, other: object) -> bool:

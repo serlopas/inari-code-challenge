@@ -17,7 +17,7 @@ class GuessEntity:
         self.white_pegs = white_pegs
         self.black_pegs = black_pegs
         self.game_id = game_id
-        self.created_at = created_at
+        self.created_at = created_at if created_at else datetime.now()
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, GuessEntity):

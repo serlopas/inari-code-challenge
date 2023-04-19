@@ -11,7 +11,7 @@ from app.core.use_cases.use_case import BaseUseCase
 from app.core.utils import code_guesser
 from app.mastermind.game.domain.entities.game_entity import GameEntity
 from app.mastermind.game.domain.entities.guess_entity import GuessEntity
-from app.mastermind.game.domain.entities.guess_query_model import GuessReadModel, GuessGameStatusReadModel
+from app.mastermind.game.domain.entities.guess_query_model import GuessGameStatusReadModel
 from app.mastermind.game.unit_of_work.base.game_unit_of_work import GameUnitOfWork
 from app.mastermind.game.unit_of_work.base.guess_unit_of_work import GuessUnitOfWork
 
@@ -22,7 +22,7 @@ class CreateGuessUseCaseArgs:
     guess_code: str
 
 
-class CreateGuessUseCase(BaseUseCase[CreateGuessUseCaseArgs, GuessReadModel]):
+class CreateGuessUseCase(BaseUseCase[CreateGuessUseCaseArgs, GuessGameStatusReadModel]):
     game_unit_of_work: GameUnitOfWork
     guess_unit_of_work: GuessUnitOfWork
 
