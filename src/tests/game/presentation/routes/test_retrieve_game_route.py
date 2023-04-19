@@ -2,6 +2,7 @@ from unittest import mock
 
 from starlette import status
 
+from app.core.error.game_exceptions import GameNotFoundError
 from tests.factories.game_factory import GamesFactory
 from tests.factories.guess_factory import GuessesFactory
 
@@ -38,18 +39,16 @@ class TestRetrieveGame:
         assert len(body["guesses"]) == 1
         assert "created_at" in body
 
-    def test_retrieve_game_internal_error(self, client, session):
-        game = GamesFactory()
-
-        with mock.patch(
-            "app.mastermind.game.data.services.game_query_service_impl.GameQueryServiceImpl.find_by_id"
-        ) as find_by_id_mock:
-            find_by_id_mock.side_effect = Exception
-            response = client.get(f"/games/{game.id}")
+    def test_retrieve_game_internal_error(self, client, session, faker):
+        with mock.patch("app.mastermind.game.service.game_service.GameService.retrieve_game", side_effect=Exception):
+            response = client.get(f"/games/{faker.uuid4()}")
 
         assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
 
     def test_retrieve_game_not_found(self, client, faker):
-        response = client.get(f"/games/{faker.uuid4()}")
+        with mock.patch(
+            "app.mastermind.game.service.game_service.GameService.retrieve_game", side_effect=GameNotFoundError
+        ):
+            response = client.get(f"/games/{faker.uuid4()}")
 
         assert response.status_code == status.HTTP_404_NOT_FOUND

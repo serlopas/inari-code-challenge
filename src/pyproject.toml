@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "inari-code-challenge"
-version = "0.0.0"
+version = "1.0.0"
 description = ""
 authors = ["Sergio López Arias <serlopas@gmail.com>"]
 
@@ -37,10 +37,6 @@ mypy = "*"
 [tool.poetry_bumpversion.file."app/settings/base.py"]
 search = 'VERSION: str = "{current_version}"'
 replace = 'VERSION: str = "{new_version}"'
-
-[tool.poetry_bumpversion.file."../sonar-scanner.properties"]
-search = 'sonar.projectVersion={current_version}'
-replace = 'sonar.projectVersion={current_version}'
 
 [tool.flake8]
 per-file-ignores = [

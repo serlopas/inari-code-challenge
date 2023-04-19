@@ -5,7 +5,7 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    VERSION: str = "0.0.0"  # It MUST match the version in pyproject.toml file
+    VERSION: str = "1.0.0"  # It MUST match the version in pyproject.toml file
     ENVIRONMENT: str
     DEBUG: Optional[bool] = False
 

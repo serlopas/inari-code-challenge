@@ -29,7 +29,7 @@ class TestCreateGuess:
         payload = CreateGuessModel(guess_code=guess_code).dict()
 
         with mock.patch(
-            "app.mastermind.game.domain.use_cases.create_guess_use_case.CreateGuessUseCaseImpl.__call__",
+            "app.mastermind.game.service.game_service.GameService.create_guess",
             side_effect=GameNotFoundError,
         ):
             response = client.post(f"/games/{faker.uuid4()}/guesses/", json=payload)
@@ -41,7 +41,7 @@ class TestCreateGuess:
         payload = CreateGuessModel(guess_code=guess_code).dict()
 
         with mock.patch(
-            "app.mastermind.game.domain.use_cases.create_guess_use_case.CreateGuessUseCaseImpl.__call__",
+            "app.mastermind.game.service.game_service.GameService.create_guess",
             side_effect=GuessSizeNotValid,
         ):
             response = client.post(f"/games/{game.id}/guesses/", json=payload)
@@ -54,7 +54,7 @@ class TestCreateGuess:
         payload = CreateGuessModel(guess_code=guess_code).dict()
 
         with mock.patch(
-            "app.mastermind.game.domain.use_cases.create_guess_use_case.CreateGuessUseCaseImpl.__call__",
+            "app.mastermind.game.service.game_service.GameService.create_guess",
             side_effect=GuessCombinationNotValid,
         ):
             response = client.post(f"/games/{game.id}/guesses/", json=payload)
@@ -67,7 +67,7 @@ class TestCreateGuess:
         payload = CreateGuessModel(guess_code=guess_code).dict()
 
         with mock.patch(
-            "app.mastermind.game.domain.use_cases.create_guess_use_case.CreateGuessUseCaseImpl.__call__",
+            "app.mastermind.game.service.game_service.GameService.create_guess",
             side_effect=GameAlreadyFinishedError,
         ):
             response = client.post(f"/games/{game.id}/guesses/", json=payload)
@@ -80,7 +80,7 @@ class TestCreateGuess:
         payload = CreateGuessModel(guess_code=guess_code).dict()
 
         with mock.patch(
-            "app.mastermind.game.domain.use_cases.create_guess_use_case.CreateGuessUseCaseImpl.__call__",
+            "app.mastermind.game.service.game_service.GameService.create_guess",
             side_effect=Exception,
         ):
             response = client.post(f"/games/{game.id}/guesses/", json=payload)

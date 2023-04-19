@@ -4,9 +4,10 @@ from app.core.error.game_exceptions import GameNotFoundError, GameAlreadyFinishe
 from app.core.error.guess_exceptions import GuessSizeNotValid, GuessCombinationNotValid
 from app.mastermind.game.dependencies import get_create_guess_use_case
 from app.mastermind.game.domain.entities.guess_query_model import GuessGameStatusReadModel
-from app.mastermind.game.domain.use_cases.create_guess_use_case import CreateGuessUseCase
 from app.mastermind.game.presentation.routes.games_router import router
 from app.mastermind.game.presentation.schemas.guess_schemas import CreateGuessModel
+from app.mastermind.game.service.game_service import GameService
+from app.mastermind.game.unit_of_work.use_cases.create_guess_use_case import CreateGuessUseCase
 
 
 @router.post(
@@ -20,12 +21,7 @@ def create_guess(
     create_guess_use_case: CreateGuessUseCase = Depends(get_create_guess_use_case),
 ):
     try:
-        guess_result = create_guess_use_case(
-            (
-                id,
-                data.guess_code,
-            )
-        )
+        guess_result = GameService.create_guess(id, data.guess_code, create_guess_use_case)
     except GameNotFoundError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     except GuessSizeNotValid as e:
