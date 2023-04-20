@@ -18,8 +18,8 @@ def evaluate_guess(code: str, guess_code: str) -> GuessResult:
         if code[i] == guess_code[i]:
             black_pegs += 1
         else:
-            code_digits_count[code[i]] = 1
-            guess_digits_count[guess_code[i]] = 1
+            code_digits_count[code[i]] += 1
+            guess_digits_count[guess_code[i]] += 1
 
     for digit in guess_digits_count:
         if digit in code_digits_count:
