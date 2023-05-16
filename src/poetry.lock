@@ -1119,20 +1119,20 @@ jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 name = "sentry-sdk"
-version = "1.19.1"
+version = "1.23.0"
 description = "Python client for Sentry (https://sentry.io)"
 category = "main"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sentry-sdk-1.19.1.tar.gz", hash = "sha256:7ae78bd921981a5010ab540d6bdf3b793659a4db8cccf7f16180702d48a80d84"},
-    {file = "sentry_sdk-1.19.1-py2.py3-none-any.whl", hash = "sha256:885a11c69df23e53eb281d003b9ff15a5bdfa43d8a2a53589be52104a1b4582f"},
+    {file = "sentry-sdk-1.23.0.tar.gz", hash = "sha256:58f4ff9e76c21bc7172eeec9f1bccb3ff2247c74c71d5590438ce36c803f46ea"},
+    {file = "sentry_sdk-1.23.0-py2.py3-none-any.whl", hash = "sha256:01b56a276642d31cf9b4aaf0b55938677265d7006be4785a10ef6330d0f5bba9"},
 ]
 
 [package.dependencies]
 certifi = "*"
 fastapi = {version = ">=0.79.0", optional = true, markers = "extra == \"fastapi\""}
-urllib3 = {version = ">=1.26.11", markers = "python_version >= \"3.6\""}
+urllib3 = {version = ">=1.26.11,<2.0.0", markers = "python_version >= \"3.6\""}
 
 [package.extras]
 aiohttp = ["aiohttp (>=3.5)"]
@@ -1144,10 +1144,11 @@ chalice = ["chalice (>=1.16.0)"]
 django = ["django (>=1.8)"]
 falcon = ["falcon (>=1.4)"]
 fastapi = ["fastapi (>=0.79.0)"]
-flask = ["blinker (>=1.1)", "flask (>=0.11)"]
+flask = ["blinker (>=1.1)", "flask (>=0.11)", "markupsafe"]
 grpcio = ["grpcio (>=1.21.1)"]
 httpx = ["httpx (>=0.16.0)"]
 huey = ["huey (>=2)"]
+loguru = ["loguru (>=0.5)"]
 opentelemetry = ["opentelemetry-distro (>=0.35b0)"]
 pure-eval = ["asttokens", "executing", "pure-eval"]
 pymongo = ["pymongo (>=3.1)"]
@@ -1489,5 +1490,5 @@ h11 = ">=0.9.0,<1"
 
 [metadata]
 lock-version = "2.0"
-python-versions = "^3.11.3"
-content-hash = "2ebc76dd767c69437f2921b234f65a010fea3f0bbede5c7f8513b1ff21fd1d99"
+python-versions = "~3.11"
+content-hash = "a12afaf53eba4528ef1e406e89847b02ff883b155761af23e300979a1adb4906"
